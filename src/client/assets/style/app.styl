@@ -1,0 +1,31 @@
+// Specify overrides (theme and/or base variables etc.)
+// See https://vuetifyjs.com/style/colors
+$theme := {
+  primary: '#1976D2',
+  secondary: '#424242',
+  accent: '#82B1FF',
+  error: '#FF5252',
+  info: '#2196F3',
+  success: '#4CAF50',
+  warning: '#FFC107'
+}
+
+// Main transition effect.
+.page-enter-active, .page-leave-active {
+  transition: opacity .25s
+}
+.page-enter, .page-leave-active {
+  opacity: 0
+}
+
+// Paginate transition effect.
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-30px, 0);
+}

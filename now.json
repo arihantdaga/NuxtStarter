@@ -1,0 +1,4 @@
+{
+  "name": "getmechef",
+  "env": ".prod.env"
+}
