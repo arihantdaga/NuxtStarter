@@ -1,11 +1,11 @@
 const bcrypt = require('bcryptjs')
 const blacklist = require('express-jwt-blacklist')
-const User = require('./models')
 const jwt = require('jsonwebtoken')
 const stripUser = require('../../util/stripUser')
 const randId = require('../../util/randId')
 const { ServerError } = require('express-server-error')
-
+const mongoose = require("mongoose");
+const User = mongoose.model("User");
 
 
 module.exports = exports
@@ -105,6 +105,7 @@ exports.signIn = {
         throw new ServerError('Authentication failed. Incorrect username or password', { status: 401, log: false })
       } else {
         user = stripUser(user)
+        
         let token = jwt.sign(user, process.env.SECRET, { expiresIn: '30 days', jwtid: randId() })
         res.status(200).json({ message: `Welcome, ${user.username}!`, token, user })
       }

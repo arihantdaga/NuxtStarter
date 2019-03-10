@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const { Nuxt, Builder } = require('nuxt')
 
 const config = require('../../nuxt.config')
+// Load Models Here
+const models = require("./models/index");
 const apiRoutes = require('./api')
 
 const app = express()

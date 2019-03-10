@@ -1,6 +1,6 @@
 const { Router } = require('express')
-const authenticate = require('../../middleware/authenticate');
-const { index, username, signIn, signOut, check } = require('./controllers')
+const authenticate = require('../middleware/authenticate');
+const { index, username, signIn, signOut, check } = require('./controllers/users')
 
 const router = Router()
 
@@ -16,6 +16,5 @@ router.route('/:username')
   .all(authenticate())
   .get(username.get)
   .post(username.post)
-  .delete(username.delete)
-
+  
 module.exports = router

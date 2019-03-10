@@ -1,7 +1,7 @@
-module.exports = function stripUser (user, fields = ['password', 'createdAt', 'updatedAt', '_id', '__v']) {
-  let newUser = user.toObject()
-  fields.forEach(field => {
-    delete newUser[field]
-  })
+module.exports = function stripUser (user, fields = ['name', '_id']) {
+  let newUser = {};
+  fields.map(field => {
+    newUser[field] = user["field"];
+  });
   return newUser
 }

@@ -2,54 +2,43 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const { ServerError } = require('express-server-error')
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    require: true,
-    minlength: 3
-  },
+const chefSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
     require: true
   },
-  firstName: String,
-  lastName: String,
+  name: String,
   password: {
     type: String,
     require: true,
-    minlength: 5
-  },
-  admin: {
-    type: Boolean,
-    default: false,
-    require: true
+    minlength: 5,
+    select: false
   }
 }, {
   timestamps: true
 })
 
-const User = mongoose.model('User', userSchema)
 
-userSchema.pre('save', async function (callback) {
+
+chefSchema.pre('save', async function (callback) {
   if (!this.isModified('password')) return callback()
   this.password = await bcrypt.hash(this.password, 10)
   callback()
 })
 
-userSchema.post('save', function (error, doc, next) {
+chefSchema.post('save', function (error, doc, next) {
   if (error.name === 'MongoError' && error.code === 11000) {
-    next(new ServerError('User taken.', { status: 409, log: false }))
+    next(new ServerError('User taken.', { status: 404, log: false }))
   }
 })
 
 // don't ever return password on creation.
-userSchema.set('toJSON', {
+chefSchema.set('toJSON', {
   transform (doc, ret, options) {
     delete ret.password
-    return ret
+    return ret;
   }
 })
 
-module.exports = User
+module.exports = {chefSchema};

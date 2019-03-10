@@ -31,7 +31,7 @@ const authErrors = function (error, req, res, next) {
     res.status(401).json({ name: error.name, message: error.message })
   } else {
     console.error(error)
-    res.status(500).json({ message: 'Internal Server Error.' })
+    res.status(500).json({ message: 'Internal Server Error.' });
   }
 }
 
