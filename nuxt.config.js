@@ -1,5 +1,6 @@
 const path = require('path')
-
+const Consts = require("./src/appconsts");
+console.log(Consts);
 require('dotenv').config({
   silent: true,
   path: process.env.NODE_ENV === 'production' ? '.prod.env' : '.dev.env'
@@ -18,7 +19,11 @@ module.exports = {
   ],
   env: {
     HOST: process.env.HOST,
-    PORT: process.env.PORT
+    PORT: process.env.PORT,
+    CONSTS: {
+      ...Consts
+    }
+
   },
   head: {
     title: 'getmechef',
@@ -38,9 +43,14 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/component-cache'
+    '@nuxtjs/component-cache',
+    '@nuxtjs/axios'
   ],
-  plugins: ['~/plugins/vuetify.js'],
+  axios: {
+    baseUrl: `http://${process.env.HOST}:${process.env.PORT}`,
+    browserBaseURL: ''
+  },
+  plugins: ['~/plugins/vuetify.js', '~/plugins/axios.js'],
   render: {
     static: {
       maxAge: '1y',

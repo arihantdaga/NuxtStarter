@@ -61,13 +61,14 @@
 </template>
 
 <script>
-import axios from '~/plugins/axios'
+// import {axiosIns as axios} from '~/plugins/axios'
 import isEmail from 'validator/lib/isEmail'
 let usernameTimeout = null
 let emailTimeout = null
 
 export default {
   props: ['redirect'],
+
   data () {
     return {
       username: '',
@@ -101,12 +102,13 @@ export default {
       clearTimeout(usernameTimeout)
       usernameTimeout = setTimeout(() => {
         let username = e.target.value
-        axios.get(`/users/check`, {
+        this.$axios.get(`/api/users/check`, {
           params: {
             check: 'username',
             data: username
           }
         }).then(data => {
+          console.log(data);
           this.usernameExistsData = data.data.exists
         }).catch(error => {
           console.error(error)
@@ -117,7 +119,7 @@ export default {
       clearTimeout(emailTimeout)
       emailTimeout = setTimeout(() => {
         let email = e.target.value
-        axios.get(`/users/check`, {
+        this.$axios.get(`/api/users/check`, {
           params: {
             check: 'email',
             data: email

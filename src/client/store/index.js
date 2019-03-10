@@ -1,4 +1,4 @@
-import axios from '~/plugins/axios'
+// import {axiosIns as axios} from '~/plugins/axios'
 import jwtDecode from 'jwt-decode'
 
 export const state = () => {
@@ -49,7 +49,7 @@ export const actions = {
   async fetchAllUsers ({ commit, state }) {
     try {
       commit('FETCH_ALL_USERS_REQUEST')
-      let { data } = await axios.get('/users')
+      let { data } = await this.$axios.get('/users')
       commit('FETCH_ALL_USERS_SUCCESS', data)
     } catch (error) {
       commit('FETCH_ALL_USERS_FAILURE', error)

@@ -26,6 +26,7 @@
     "git-push": "git add . && git commit -m 'General Update' && git push -u origin master"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.4.1",
     "@nuxtjs/component-cache": "^1.1.4",
     "@nuxtjs/pwa": "^2.6.0",
     "axios": "^0.17.1",

@@ -1,4 +1,4 @@
-import axios from '~/plugins/axios'
+// import {axiosIns as axios} from '~/plugins/axios'
 
 export const state = () => {
   return {
@@ -29,7 +29,7 @@ export const actions = {
   async fetchUser ({ state, commit }, { username }) {
     try {
       commit('FETCH_USER_REQUEST')
-      let { data } = await axios.get(`/users/${username}`)
+      let { data } = await this.$axios.get(`/users/${username}`)
       commit('FETCH_USER_SUCCESS', data)
     } catch (error) {
       commit('FETCH_USER_FAILURE', error)

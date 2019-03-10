@@ -1,4 +1,4 @@
-import axios from '~/plugins/axios'
+// import {axiosIns as axios} from '~/plugins/axios'
 import Cookies from 'js-cookie'
 
 export const state = () => {
@@ -79,7 +79,7 @@ export const actions = {
   async signUp ({ commit }, payload) {
     try {
       commit('SIGN_UP_REQUEST')
-      let { data } = await axios.post('/users', payload)
+      let { data } = await this.$axios.post('/api/users', payload)
       commit('SIGN_UP_SUCCESS', data)
       commit('notification/SUCCESS', data, { root: true })
     } catch (error) {
@@ -91,7 +91,7 @@ export const actions = {
     try {
       commit('SIGN_IN_REQUEST')
       commit('notification/PENDING', null, { root: true })
-      let { data } = await axios.post('/users/sign-in', payload)
+      let { data } = await this.$axios.post('/api/users/sign-in', payload)
       commit('SIGN_IN_SUCCESS', data)
       commit('notification/SUCCESS', data, { root: true })
     } catch (error) {
@@ -102,7 +102,7 @@ export const actions = {
   async signOut ({ commit }) {
     try {
       commit('SIGN_OUT_REQUEST')
-      let { data } = await axios.post('/users/sign-out')
+      let { data } = await this.$axios.post('/api/users/sign-out')
       commit('SIGN_OUT_SUCCESS', data)
       commit('notification/SUCCESS', data, { root: true })
       commit('CLEAR_LISTS', null, { root: true })
@@ -114,7 +114,7 @@ export const actions = {
   async deleteUser ({ state, commit }) {
     try {
       commit('DELETE_USER_REQUEST')
-      let { data } = await axios.delete(`/users/${state.username}`)
+      let { data } = await axios.delete(`/api/users/${state.username}`)
       commit('DELETE_USER_SUCCESS', data)
       commit('notification/SUCCESS', data, { root: true })
       commit('CLEAR_LISTS', null, { root: true })
