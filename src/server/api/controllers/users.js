@@ -17,7 +17,7 @@ exports.index = {
       if (!users) throw new ServerError('No users exist at this moment.', { status: 404 })
       res.json(users)
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   },
   async post (req, res) {
@@ -32,7 +32,7 @@ exports.index = {
         throw new ServerError('Passwords don\'t match.', { status: 400 })
       }
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   }
 }
@@ -51,7 +51,7 @@ exports.check = {
         throw new ServerError('Query not supported.', { status: 400 })
       }
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   }
 }
@@ -71,7 +71,7 @@ exports.username = {
         })
       }
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   },
   async post (req, res) {
@@ -87,7 +87,7 @@ exports.username = {
         throw new ServerError('Unauthorized.', { status: 401 })
       }
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   }
 }
@@ -105,12 +105,12 @@ exports.signIn = {
         throw new ServerError('Authentication failed. Incorrect username or password', { status: 401, log: false })
       } else {
         user = stripUser(user)
-        
+
         let token = jwt.sign(user, process.env.SECRET, { expiresIn: '30 days', jwtid: randId() })
         res.status(200).json({ message: `Welcome, ${user.username}!`, token, user })
       }
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   }
 }
@@ -121,7 +121,7 @@ exports.signOut = {
       blacklist.revoke(req.user)
       res.json({ message: 'Sign out successful. Good bye! :)' })
     } catch (error) {
-      res.handleServerError(error)
+      return next(error)
     }
   }
 }
